@@ -20,12 +20,17 @@ export default class MapContainer extends Component {
     infowindow: new this.props.google.maps.InfoWindow(),
     highlightedIcon: null
   }
+  gm_authFailure(){
+      window.alert("Google Maps error!")
+  }
 
   componentDidMount() {
     this.loadMap()
     this.onclickLocation()
     this.setState({highlightedIcon: this.makeMarkerIcon('FFFF24')})
-  }
+    window.gm_authFailure = this.gm_authFailure;
+}
+
 
   loadMap() {
     if (this.props && this.props.google) {
@@ -192,12 +197,12 @@ export default class MapContainer extends Component {
       <div>
         <div className="container">
           <div className="text-input">
-            <input role="search" type='text' placeholder='search'
+            <input role="search" type='text' placeholder='search' aria-label='search'
                    value={this.state.value}
                    onChange={this.handleValueChange}/>
-            <ul className="locations-list">{
+            <ul className="locations-list" role="list">{
               markers.filter(m => m.getVisible()).map((m, i) =>
-                (<li key={i}>{m.title}</li>))
+                (<li tabIndex='0'role="listitem" key={i}>{m.title}</li>))
             }</ul>
           </div>
           <div role="application" className="map" ref="map">
