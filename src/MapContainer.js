@@ -122,7 +122,10 @@ export default class MapContainer extends Component {
         const pageLink = `<a href="https://en.wikipedia.org/wiki/${search}">For more information, visit ${search} on Wikipedia website</a>`
 
         outerMap.fillInfoWindow(marker, infowindow, map, firstParagraph + pageLink)
-      });
+      }).catch(function(error){
+        const pageError = 'Wikipedia API fail' + error;
+        outerMap.fillInfoWindow(marker, infowindow, map, pageError)
+      })
     }
 
     // fill infowindow with retrieved wiki data.
